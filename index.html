@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This is app that allows you to learn about the origins and historical uses of a word of your choosing."
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <title>Word Origins App</title>
+  </head>
+  <body>
+    <h1>Where'd that word come from??</h1>
+    <form class="js-search">
+      <label for="word-search"
+        >Type in a word and hit search to find out about its history: see its
+        etymology and examples of its usage in the past</label
+      >
+      <input
+        x-webkit-speech
+        id="word-search"
+        type="text"
+        placeholder="Enter a word here"
+        required="required"
+      />
+      <button type="submit">Search</button>
+    </form>
+    <span class="search-error"></span>
+    <section class="js-search-results dictionary hidden">
+      <ul class="js-results-list"></ul>
+    </section>
+    <section class="js-search-results wiki hidden">
+      <ul class="js-results-list"></ul>
+    </section>
+    <section class="js-search-results newpapers hidden">
+      <ul class="js-results-list"></ul>
+    </section>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js"></script>
+  </body>
+</html>
