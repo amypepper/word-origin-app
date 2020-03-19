@@ -54,7 +54,7 @@ function runSearches() {
       throw new Error(response.statusText);
     })
     .then(dictionaryJson => {
-      console.log(dictionaryJson);
+      console.log(displayDictionaryResults(dictionaryJson));
     })
     .catch(err => $(".search-error").html(`Something went wrong: (${err})`));
 
@@ -91,9 +91,31 @@ function runSearches() {
 }
 
 // render search results to the DOM
-// function displayResults() {
-//     for ()
-//   $(".js-results-list").append(`<li></li>`);
-// }
+function displayDictionaryResults(dictionaryArr) {
+  console.log(dictionaryArr);
+  // grab all matching dictionary entries
+  console.log(`this is array length: ${dictionaryArr.length}`);
+
+  let flArray = [];
+  for (let i = 0; i < dictionaryArr.length; i++) {
+    flArray.push(`${dictionaryArr[i].shortdef.join("; ")}`);
+    console.log(`this is flArray: `, flArray);
+  }
+  // let definitions = flArray => {
+  //   for (i = 0; i < flArray.length; i++) {
+  //     return flArray[i];
+  //   }
+  };
+  //$(".dictionary ul").append(`<li>${definitions}</li>`);
+  return definitions;
+}
+
+// meta: {id: "gaslight:1", uuid: "95cfd457-08a8-49b5-9ddd-bec635ee94b9", sort: "070440000", src: "collegiate", section: "alpha", …}
+// hom: 1
+// hwi: {hw: "gas*light", prs: Array(2)}
+// fl: "noun"
+// def: [{…}]
+// date: "1808{ds||1||}"
+// shortdef: (3) ["light made by burning illuminating gas", "a gas flame", "a gas lighting fixture"]
 
 submitHandler();
