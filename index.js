@@ -96,18 +96,15 @@ function displayDictionaryResults(dictionaryArr) {
   // grab all matching dictionary entries
   console.log(`this is array length: ${dictionaryArr.length}`);
 
-  let flArray = [];
+  let defArr = [];
   for (let i = 0; i < dictionaryArr.length; i++) {
-    flArray.push(`${dictionaryArr[i].shortdef.join("; ")}`);
-    console.log(`this is flArray: `, flArray);
+    defArr.push(`${dictionaryArr[i].shortdef.join("; ")}`);
   }
-  // let definitions = flArray => {
-  //   for (i = 0; i < flArray.length; i++) {
-  //     return flArray[i];
-  //   }
-  };
-  //$(".dictionary ul").append(`<li>${definitions}</li>`);
-  return definitions;
+  console.log(`this is defArr: `, defArr);
+
+  for (i = 0; i < defArr.length; i++) {
+    return defArr.pop();
+  }
 }
 
 // meta: {id: "gaslight:1", uuid: "95cfd457-08a8-49b5-9ddd-bec635ee94b9", sort: "070440000", src: "collegiate", section: "alpha", …}
