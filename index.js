@@ -153,7 +153,7 @@ function displayEtymology(dictionaryArr) {
 function formatEtymologies(rawString) {
   const regex1 = /{/g;
   const regex2 = /}/g;
-  const regex3 = /it/g;
+  const regex3 = /it(?=>)/g;
   let firstCleanup = rawString.replace(regex1, "<");
   let secondCleanup = firstCleanup.replace(regex2, ">");
   let cleanedUpEtymologies = secondCleanup.replace(regex3, "i");
