@@ -23,7 +23,7 @@ function submitHandler() {
 
 // remove all characters except [a-z] and hyphens
 function prepText(userWord) {
-  const regex = /\s/g;
+  const regex = /\s|[\,\-]/g;
   console.log(`prepText ran`);
   return userWord
     .toLowerCase()
@@ -46,7 +46,21 @@ function runSearches() {
   const libraryApi = `https://chroniclingamerica.loc.gov/search/pages/results/?andtext=${searchTerm}&format=json`;
 
   //call dictionary API
-  fetch(dictionaryApi)
+  dictionaryCall(dictionaryApi);
+
+  //call Wikimedia API
+  wikiCall(wikiApi, wikiHeaders);
+
+  //call lib of Congress API
+  libraryCall(libraryApi);
+
+  console.log(
+    `runSearches ran with: ${dictionaryApi}, ${wikiApi}, ${libraryApi}`
+  );
+}
+
+function dictionaryCall(url) {
+  fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -54,12 +68,14 @@ function runSearches() {
       throw new Error(response.statusText);
     })
     .then(dictionaryJson => {
-      displayDictionaryResults(dictionaryJson);
+      displayDictionaryDefs(dictionaryJson);
+      displayEtymology(dictionaryJson);
     })
     .catch(err => $(".search-error").html(`Something went wrong: (${err})`));
+}
 
-  //call Wikimedia API
-  fetch(wikiApi, wikiHeaders)
+function wikiCall(url, options) {
+  fetch(url, options)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -70,9 +86,10 @@ function runSearches() {
       console.log(wikiJson);
     })
     .catch(err => $(".search-error").html(`Something went wrong: (${err})`));
+}
 
-  //call lib of Congress API
-  fetch(libraryApi)
+function libraryCall(url) {
+  fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -85,16 +102,18 @@ function runSearches() {
     .catch(err =>
       $(".search-error").html(`<p>Something went wrong: (${err})</p>`)
     );
-  console.log(
-    `runSearches ran with: ${dictionaryApi}, ${wikiApi}, ${libraryApi}`
-  );
 }
 
-function displayDictionaryResults(dictionaryArr) {
+function displayDictionaryDefs(dictionaryArr) {
+  // remove hidden class so results will show
   $(".dictionary").removeClass("hidden");
+
+  //render results to the DOM
   $(".dictionary ul").append(`
   <li><p>Definition(s):</p></li>`);
+
   console.log(dictionaryArr);
+
   // grab all matching dictionary definitions
   dictionaryArr.forEach(dictObj => {
     console.log(dictObj.shortdef);
@@ -103,12 +122,42 @@ function displayDictionaryResults(dictionaryArr) {
     });
   });
 }
-// meta: {id: "gaslight:1", uuid: "95cfd457-08a8-49b5-9ddd-bec635ee94b9", sort: "070440000", src: "collegiate", section: "alpha", …}
-// hom: 1
-// hwi: {hw: "gas*light", prs: Array(2)}
-// fl: "noun"
-// def: [{…}]
-// date: "1808{ds||1||}"
-// shortdef: (3) ["light made by burning illuminating gas", "a gas flame", "a gas lighting fixture"]
 
+function displayEtymology(dictionaryArr) {
+  // remove hidden class so results will show
+  $(".dictionary").removeClass("hidden");
+
+  //render results to the DOM
+  $(".dictionary ul").append(`
+  <li class="origin"><p>Origin(s):</p></li>`);
+
+  console.log(dictionaryArr);
+
+  // test for presence of "et" key
+  for (let i = 0; i < dictionaryArr.length; i++) {
+    if ("et" in dictionaryArr[i]) {
+      // if et exists, render the contents at index 1 of each of its arrays to the DOM
+      for (let index = 0; index < dictionaryArr[i].et.length; index++) {
+        let etymologies = `${dictionaryArr[i].et[index][1]}`;
+        console.log("this is etymologies: ", etymologies);
+
+        $(".dictionary li.origin").append(
+          `<p>${formatEtymologies(etymologies)}</p>`
+        );
+      }
+    } else {
+      console.log("sorry :(");
+    }
+  }
+}
+function formatEtymologies(rawString) {
+  const regex1 = /{/g;
+  const regex2 = /}/g;
+  const regex3 = /it/g;
+  let firstCleanup = rawString.replace(regex1, "<");
+  let secondCleanup = firstCleanup.replace(regex2, ">");
+  let cleanedUpEtymologies = secondCleanup.replace(regex3, "i");
+  console.log("no more stupid {i}???", cleanedUpEtymologies);
+  return cleanedUpEtymologies;
+}
 submitHandler();
