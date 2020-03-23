@@ -83,13 +83,15 @@ function wikiCall(url, options) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(`(${response.detail})`);
+      throw new Error(
+        `Wikipedia couldn't find a page that related to your search.`
+      );
     })
     .then(wikiJson => {
       console.log("this is wikipedia json: ", wikiJson);
       displayWiki(wikiJson);
     })
-    .catch(err => $(".search-error").html(`Something went wrong: (${err})`));
+    .catch(err => $(".search-error").html(`<p>${err}</p>`));
 }
 
 function libraryCall(url) {
@@ -180,9 +182,9 @@ function displayLibrary(libraryData) {
   $(".newspapers").removeClass("hidden");
 
   $(".newspapers ul").append(`
-  <li class="newspapers"><p>"${searchTerm}" as used throughout American history<br />(Please note that the relevancy of search results is limited by the accuracy of the Library of Congess' text recognition software that scanned the newspaper images):</p></li>`);
+  <li class="newspapers"><p>"${searchTerm}" as used in newspapers throughout American history:<br />(Please note that the relevancy of search results is limited by the accuracy of the Library of Congess' text recognition software that scanned the newspaper images):</p></li>`);
 
-  generateNewspaperResults(libraryData);
+  $(generateNewspaperResults(libraryData));
 
   console.log(`displayLibrary ran`);
   console.log(`this is libraryData: ${libraryData}`);
@@ -191,11 +193,16 @@ function displayLibrary(libraryData) {
 function generateNewspaperResults(libObj) {
   const newsArray = libObj.items;
   for (let i = 0; i < 5; i++) {
-    $(".newspapers li").append(`<p>${newsArray[i].title}</p>
+    $(".newspapers li").append(`<p>${normalizeNewsResults(newsArray)}</p>
     <p>Date published: ${newsArray[i].date}</p>
-    <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${newsArray[i].id}/ocr/">View newspaper (opens in new tab)</a></p>
+    <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${
+      newsArray[i].id
+    }/ocr/">View newspaper (opens in new tab)</a></p>
     `);
   }
 }
-
-submitHandler();
+function normalizeNewsResults(arr) {
+  let normalizedPaperTitle = arr[i].title.split("[");
+  return normalizedPaperTitle[0];
+}
+$(submitHandler);
