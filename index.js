@@ -6,7 +6,9 @@ let searchTerm;
 function submitHandler() {
   $(".js-search").on("click", "button", event => {
     event.preventDefault();
-    // EMPTY ULs??? OR ADD BACK HIDDEN?
+
+    // clear the search results
+    $(".js-results-list").empty();
 
     // once button is clicked, collect the text that is in `input`
     const userInput = $('input[id="word-search"]').val();
@@ -17,6 +19,7 @@ function submitHandler() {
 
     // call APIs with searchTerm
     runSearches();
+
     console.log(`submitHandler ran`);
   });
 }
@@ -83,7 +86,8 @@ function wikiCall(url, options) {
       throw new Error(response.statusText);
     })
     .then(wikiJson => {
-      console.log(wikiJson);
+      console.log("this is wikipedia json: ", wikiJson);
+      displayWiki(wikiJson);
     })
     .catch(err => $(".search-error").html(`Something went wrong: (${err})`));
 }
@@ -97,7 +101,8 @@ function libraryCall(url) {
       throw new Error(response.statusText);
     })
     .then(libraryJson => {
-      console.log(libraryJson);
+      console.log("this is libraryJson: ", libraryJson);
+      displayLibrary(libraryJson);
     })
     .catch(err =>
       $(".search-error").html(`<p>Something went wrong: (${err})</p>`)
@@ -131,8 +136,6 @@ function displayEtymology(dictionaryArr) {
   $(".dictionary ul").append(`
   <li class="origin"><p>Origin(s):</p></li>`);
 
-  console.log(dictionaryArr);
-
   // test for presence of "et" key
   for (let i = 0; i < dictionaryArr.length; i++) {
     if ("et" in dictionaryArr[i]) {
@@ -160,4 +163,38 @@ function formatEtymologies(rawString) {
   console.log("no more stupid {i}???", cleanedUpEtymologies);
   return cleanedUpEtymologies;
 }
+
+function displayWiki(wikiObj) {
+  $(".wiki").removeClass("hidden");
+
+  $(".wiki ul").append(`
+  <li class="wiki"><p>Wikipedia page(s):</p></li>
+  <p class="wiki-title">${wikiObj.displaytitle}</p>
+  <p><a href="${wikiObj["content_urls"].desktop.page}">${wikiObj["content_urls"].desktop.page}</a></p>
+  ${wikiObj["extract_html"]}`);
+  console.log(`displayWiki ran`);
+}
+
+function displayLibrary(libraryData) {
+  $(".newspapers").removeClass("hidden");
+
+  $(".newspapers ul").append(`
+  <li class="newspapers"><p>"${searchTerm}" as used throughout American history<br />(Please note that the relevancy of search results is limited by the accuracy of text recognition software that scanned the newspaper images):</p></li>`);
+
+  generateNewspaperResults(libraryData);
+
+  console.log(`displayLibrary ran`);
+  console.log(`this is libraryData: ${libraryData}`);
+}
+
+function generateNewspaperResults(libObj) {
+  const newsArray = libObj.items;
+  for (let i = 0; i < 5; i++) {
+    $(".newspapers li").append(`<p>${newsArray[i].title}</p>
+    <p>Date published: ${newsArray[i].date}</p>
+    <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${newsArray[i].id}/ocr/">View newspaper (opens in new tab)</a></p>
+    `);
+  }
+}
+
 submitHandler();
