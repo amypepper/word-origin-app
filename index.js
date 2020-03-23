@@ -37,7 +37,7 @@ function prepText(userWord) {
 function runSearches() {
   const dictionaryApi = `https://dictionaryapi.com/api/v3/references/collegiate/json/${searchTerm}?key=59c5b8e3-5c70-4863-a9b2-9edad5a91de1`;
 
-  const wikiApi = `https://en.wikipedia.org/api/rest_v1/page/summary/${searchTerm}`;
+  const wikiApi = `https://en.wikipedia.org/api/rest_v1/page/summary/${searchTerm}?redirect=false`;
   const wikiHeaders = {
     headers: new Headers({
       "User-Agent": `amycarlsonpepper@gmail.com`,
@@ -83,7 +83,7 @@ function wikiCall(url, options) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(response.statusText);
+      throw new Error(`(${response.detail})`);
     })
     .then(wikiJson => {
       console.log("this is wikipedia json: ", wikiJson);
@@ -172,6 +172,7 @@ function displayWiki(wikiObj) {
   <p class="wiki-title">${wikiObj.displaytitle}</p>
   <p><a href="${wikiObj["content_urls"].desktop.page}">${wikiObj["content_urls"].desktop.page}</a></p>
   ${wikiObj["extract_html"]}`);
+
   console.log(`displayWiki ran`);
 }
 
@@ -179,7 +180,7 @@ function displayLibrary(libraryData) {
   $(".newspapers").removeClass("hidden");
 
   $(".newspapers ul").append(`
-  <li class="newspapers"><p>"${searchTerm}" as used throughout American history<br />(Please note that the relevancy of search results is limited by the accuracy of text recognition software that scanned the newspaper images):</p></li>`);
+  <li class="newspapers"><p>"${searchTerm}" as used throughout American history<br />(Please note that the relevancy of search results is limited by the accuracy of the Library of Congess' text recognition software that scanned the newspaper images):</p></li>`);
 
   generateNewspaperResults(libraryData);
 
