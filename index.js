@@ -201,8 +201,11 @@ function generateNewspaperResults(libObj) {
     `);
   }
 }
-function normalizeNewsResults(arr) {
-  let normalizedPaperTitle = arr[i].title.split("[");
-  return normalizedPaperTitle[0];
+function normalizeNewsResults(newspapers) {
+  console.log("this is arr: ", newspapers);
+  return newspapers.map(newspaper => newspaper.title.split(".")[0]);
+
+  // let normalizedPaperTitle = arr[i].title.split("[");
+  // return normalizedPaperTitle[0];
 }
 $(submitHandler);
