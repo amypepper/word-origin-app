@@ -23,16 +23,12 @@ function submitHandler() {
       $(".form-validation-success").addClass("hidden");
       $(".form-validation-fail").removeClass("hidden");
 
-      console.log("search failed!!!!!!!!!!!!!");
-
       $(".form-validation-advice").text(
         "We need a word before we can search for it!"
       );
     } else if (/(\W|[0-9])/g.test(searchTerm)) {
       $(".form-validation-success").addClass("hidden");
       $(".form-validation-fail").removeClass("hidden");
-
-      console.log("search failed!!!!!!!!!!!!!");
 
       $(".form-validation-advice").text("Invalid search term. Try again!");
     } else {
