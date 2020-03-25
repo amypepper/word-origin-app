@@ -15,23 +15,29 @@
     <title>Word Origins App</title>
   </head>
   <body>
-    <h1>Where'd that word come from??</h1>
-    <form class="js-search">
+    <h1>Where'd that word come from?</h1>
+    <form class="js-search ap-search-form">
       <label for="word-search"
-        >Type in a word and hit search to find out about its history: see its
-        etymology and examples of its usage in the past</label
+        >Type in an English word and hit search to find out about its history:
+        see its etymology and examples of its usage in the past</label
       >
-      <input
-        x-webkit-speech
-        id="word-search"
-        type="text"
-        placeholder="Enter a word here"
-        required="required"
-        spellcheck="true"
-        autocomplete="en"
-      />
-      <span class="form-validation"></span>
-      <button type="submit">Search</button>
+      <p class="search-instructions">(Please enter only letters)</p>
+      <div class="ap-search-input">
+        <input
+          x-webkit-speech
+          id="word-search"
+          type="text"
+          placeholder="Enter a word here"
+          spellcheck="true"
+          autocomplete="en"
+        />
+        <span class="form-validation-success hidden"></span>
+        <span class="form-validation-fail hidden"></span>
+      </div>
+      <span class="form-validation-advice"></span>
+      <div class="ap-submit-button-div">
+        <button class="ap-submit-button" type="submit">Search</button>
+      </div>
     </form>
     <span class="search-error"></span>
     <section class="js-search-results dictionary hidden">

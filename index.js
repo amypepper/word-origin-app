@@ -5,20 +5,42 @@ let searchTerm;
 // listen for click on 'search' button
 function submitHandler() {
   $(".js-search").on("click", "button", event => {
+    // store the text that is in `input`
+    const userInput = $('input[id="word-search"]').val();
+
+    // prevent default submit behavior
     event.preventDefault();
 
     // clear the search results
     $(".js-results-list").empty();
 
-    // once button is clicked, collect the text that is in `input`
-    const userInput = $('input[id="word-search"]').val();
-
-    // strip out spaces and symbols
+    // strip out spaces and lowercase letters
     searchTerm = prepText(userInput);
     console.log(`this is searchTerm: ${searchTerm}`);
 
-    // call APIs with searchTerm
-    runSearches();
+    // test for non A-Z characters
+    if (searchTerm.length === 0) {
+      $(".form-validation-success").addClass("hidden");
+      $(".form-validation-fail").removeClass("hidden");
+
+      console.log("search failed!!!!!!!!!!!!!");
+
+      $(".form-validation-advice").text(
+        "We need a word before we can search for it!"
+      );
+    } else if (/(\W|[0-9])/g.test(searchTerm)) {
+      $(".form-validation-success").addClass("hidden");
+      $(".form-validation-fail").removeClass("hidden");
+
+      console.log("search failed!!!!!!!!!!!!!");
+
+      $(".form-validation-advice").text("Invalid search term. Try again!");
+    } else {
+      $(".form-validation-fail").addClass("hidden");
+      $(".form-validation-success").removeClass("hidden");
+      // call APIs with searchTerm
+      runSearches();
+    }
 
     console.log(`submitHandler ran`);
   });
@@ -26,12 +48,12 @@ function submitHandler() {
 
 // remove all characters except [a-z] and hyphens
 function prepText(userWord) {
-  const regex = /\s|[\,\-]/g;
+  const regex2 = /\s|[\,\-]/g;
   console.log(`prepText ran`);
   return userWord
     .toLowerCase()
     .trim()
-    .replace(regex, "");
+    .replace(regex2, "");
 }
 
 function runSearches() {
