@@ -34,12 +34,12 @@ function submitHandler() {
     } else {
       $(".form-validation-fail").addClass("hidden");
       $(".form-validation-success").removeClass("hidden");
+
       // call APIs with searchTerm
       runSearches();
     }
-
-    console.log(`submitHandler ran`);
   });
+  console.log(`submitHandler ran`);
 }
 
 // remove all characters except [a-z] and hyphens
@@ -135,12 +135,16 @@ function displayDictionaryDefs(dictionaryArr) {
 
   //render results to the DOM
   $(".dictionary ul").append(`
-  <li><p>Definition(s):</p></li>`);
+   <li><p>Definition(s):</p></li>`);
+
+  generateDefinitions(dictionaryArr);
 
   console.log(dictionaryArr);
+}
 
+function generateDefinitions(shortDefs) {
   // grab all matching dictionary definitions
-  dictionaryArr.forEach(dictObj => {
+  shortDefs.forEach(dictObj => {
     console.log(dictObj.shortdef);
     dictObj.shortdef.forEach(sense => {
       $(".dictionary li").append(`<p>${sense}</p>`);
@@ -205,25 +209,28 @@ function displayLibrary(libraryData) {
   $(generateNewspaperResults(libraryData));
 
   console.log(`displayLibrary ran`);
-  console.log(`this is libraryData: ${libraryData}`);
 }
 
 function generateNewspaperResults(libObj) {
   const newsArray = libObj.items;
+
   for (let i = 0; i < 5; i++) {
-    $(".newspapers li").append(`<p>${normalizeNewsResults(newsArray)}</p>
-    <p>Date published: ${newsArray[i].date}</p>
+    let rawTitle = newsArray[i].title;
+    let rawDate = newsArray[i].date;
+
+    $(".newspapers li").append(`<p>${rawTitle.split(".")[0]}</p>
+    <p>Date published: ${normalizeDate(rawDate)}</p>
     <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${
       newsArray[i].id
     }/ocr/">View newspaper (opens in new tab)</a></p>
     `);
   }
 }
-function normalizeNewsResults(newspapers) {
-  console.log("this is arr: ", newspapers);
-  return newspapers.map(newspaper => newspaper.title.split(".")[0]);
-
-  // let normalizedPaperTitle = arr[i].title.split("[");
-  // return normalizedPaperTitle[0];
+function normalizeDate(dateString) {
+  return `${dateString.slice(4, 6)}/${dateString.slice(
+    6,
+    8
+  )}/${dateString.slice(0, 4)}`;
 }
+
 $(submitHandler);
