@@ -1,3 +1,5 @@
+/******************** RESET ********************/
+
 html,
 body {
   box-sizing: border-box;
@@ -8,6 +10,75 @@ body {
   box-sizing: inherit;
 }
 
+body,
+body > *,
+.ap-search-form > *,
+.ap-submit-button-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1%;
+}
+
+/******************** GLOBAL ********************/
+
+body > *,
+.ap-search-form > *,
+.ap-submit-button-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1%;
+}
+
+/******************** FORM ********************/
+
+.ap-search-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.search-instructions {
+  font-style: italic;
+}
+.form-validation {
+  color: red;
+  line-height: 0;
+  padding: 5px;
+  margin: 10px 5px 10px 0px;
+}
+input,
+.search-instructions {
+  width: 200px;
+  min-height: 50px;
+}
+.ap-submit-button {
+  width: 100px;
+  min-height: 50px;
+  margin: 10px;
+}
+
+.form-validation {
+  padding-right: 20px;
+}
+
+.form-validation-fail:after {
+  content: "✖";
+  padding-left: 10px;
+  font-size: 40px;
+  color: red;
+}
+
+.form-validation-success:after {
+  content: "✓";
+  padding-left: 10px;
+  font-size: 40px;
+  color: green;
+}
+
+/******************** MAIN ********************/
 .hidden {
   display: none;
 }

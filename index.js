@@ -5,20 +5,38 @@ let searchTerm;
 // listen for click on 'search' button
 function submitHandler() {
   $(".js-search").on("click", "button", event => {
+    // store the text that is in `input`
+    const userInput = $('input[id="word-search"]').val();
+
+    // prevent default submit behavior
     event.preventDefault();
 
     // clear the search results
     $(".js-results-list").empty();
 
-    // once button is clicked, collect the text that is in `input`
-    const userInput = $('input[id="word-search"]').val();
-
-    // strip out spaces and symbols
+    // strip out spaces and lowercase letters
     searchTerm = prepText(userInput);
     console.log(`this is searchTerm: ${searchTerm}`);
 
-    // call APIs with searchTerm
-    runSearches();
+    // test for non A-Z characters
+    if (searchTerm.length === 0) {
+      $(".form-validation-success").addClass("hidden");
+      $(".form-validation-fail").removeClass("hidden");
+
+      $(".form-validation-advice").text(
+        "We need a word before we can search for it!"
+      );
+    } else if (/(\W|[0-9])/g.test(searchTerm)) {
+      $(".form-validation-success").addClass("hidden");
+      $(".form-validation-fail").removeClass("hidden");
+
+      $(".form-validation-advice").text("Invalid search term. Try again!");
+    } else {
+      $(".form-validation-fail").addClass("hidden");
+      $(".form-validation-success").removeClass("hidden");
+      // call APIs with searchTerm
+      runSearches();
+    }
 
     console.log(`submitHandler ran`);
   });
@@ -26,18 +44,18 @@ function submitHandler() {
 
 // remove all characters except [a-z] and hyphens
 function prepText(userWord) {
-  const regex = /\s|[\,\-]/g;
+  const regex2 = /\s|[\,\-]/g;
   console.log(`prepText ran`);
   return userWord
     .toLowerCase()
     .trim()
-    .replace(regex, "");
+    .replace(regex2, "");
 }
 
 function runSearches() {
   const dictionaryApi = `https://dictionaryapi.com/api/v3/references/collegiate/json/${searchTerm}?key=59c5b8e3-5c70-4863-a9b2-9edad5a91de1`;
 
-  const wikiApi = `https://en.wikipedia.org/api/rest_v1/page/summary/${searchTerm}`;
+  const wikiApi = `https://en.wikipedia.org/api/rest_v1/page/summary/${searchTerm}?redirect=false`;
   const wikiHeaders = {
     headers: new Headers({
       "User-Agent": `amycarlsonpepper@gmail.com`,
@@ -83,13 +101,15 @@ function wikiCall(url, options) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(response.statusText);
+      throw new Error(
+        `Wikipedia couldn't find a page that related to your search.`
+      );
     })
     .then(wikiJson => {
       console.log("this is wikipedia json: ", wikiJson);
       displayWiki(wikiJson);
     })
-    .catch(err => $(".search-error").html(`Something went wrong: (${err})`));
+    .catch(err => $(".search-error").html(`<p>${err}</p>`));
 }
 
 function libraryCall(url) {
@@ -172,6 +192,7 @@ function displayWiki(wikiObj) {
   <p class="wiki-title">${wikiObj.displaytitle}</p>
   <p><a href="${wikiObj["content_urls"].desktop.page}">${wikiObj["content_urls"].desktop.page}</a></p>
   ${wikiObj["extract_html"]}`);
+
   console.log(`displayWiki ran`);
 }
 
@@ -179,9 +200,9 @@ function displayLibrary(libraryData) {
   $(".newspapers").removeClass("hidden");
 
   $(".newspapers ul").append(`
-  <li class="newspapers"><p>"${searchTerm}" as used throughout American history<br />(Please note that the relevancy of search results is limited by the accuracy of text recognition software that scanned the newspaper images):</p></li>`);
+  <li class="newspapers"><p>"${searchTerm}" as used in newspapers throughout American history:<br />(Please note that the relevancy of search results is limited by the accuracy of the Library of Congess' text recognition software that scanned the newspaper images):</p></li>`);
 
-  generateNewspaperResults(libraryData);
+  $(generateNewspaperResults(libraryData));
 
   console.log(`displayLibrary ran`);
   console.log(`this is libraryData: ${libraryData}`);
@@ -190,11 +211,19 @@ function displayLibrary(libraryData) {
 function generateNewspaperResults(libObj) {
   const newsArray = libObj.items;
   for (let i = 0; i < 5; i++) {
-    $(".newspapers li").append(`<p>${newsArray[i].title}</p>
+    $(".newspapers li").append(`<p>${normalizeNewsResults(newsArray)}</p>
     <p>Date published: ${newsArray[i].date}</p>
-    <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${newsArray[i].id}/ocr/">View newspaper (opens in new tab)</a></p>
+    <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${
+      newsArray[i].id
+    }/ocr/">View newspaper (opens in new tab)</a></p>
     `);
   }
 }
+function normalizeNewsResults(newspapers) {
+  console.log("this is arr: ", newspapers);
+  return newspapers.map(newspaper => newspaper.title.split(".")[0]);
 
-submitHandler();
+  // let normalizedPaperTitle = arr[i].title.split("[");
+  // return normalizedPaperTitle[0];
+}
+$(submitHandler);
