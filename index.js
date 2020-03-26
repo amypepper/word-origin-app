@@ -130,26 +130,36 @@ function libraryCall(url) {
 }
 
 function displayDictionaryDefs(dictionaryArr) {
+  console.log("this is dictionaryArr: ", dictionaryArr);
   // remove hidden class so results will show
   $(".dictionary").removeClass("hidden");
 
   //render results to the DOM
   $(".dictionary ul").append(`
-   <li><p>Definition(s):</p></li>`);
+   <li class="dictionary"><p>Definition(s):</p></li>`);
 
   generateDefinitions(dictionaryArr);
-
-  console.log(dictionaryArr);
 }
 
-function generateDefinitions(shortDefs) {
-  // grab all matching dictionary definitions
-  shortDefs.forEach(dictObj => {
-    console.log(dictObj.shortdef);
-    dictObj.shortdef.forEach(sense => {
-      $(".dictionary li").append(`<p>${sense}</p>`);
+function generateDefinitions(dictInfo) {
+  // test to be sure there is a `shortdef` key
+  if (!dictInfo[0].shortdef) {
+    $("li.dictionary").append(
+      `<p class="ital">We couldn't find that word. Here are some search suggestions:</p>`
+    );
+
+    for (let i = 0; i < 10; i++) {
+      $("li.dictionary").append(`<p>${dictInfo[i]}</p>`);
+    }
+  } else {
+    // grab all matching dictionary definitions
+    dictInfo.forEach(dictObj => {
+      console.log(dictObj.shortdef);
+      dictObj.shortdef.forEach(sense => {
+        $("li.dictionary").append(`<p>${sense}</p>`);
+      });
     });
-  });
+  }
 }
 
 function displayEtymology(dictionaryArr) {
@@ -157,54 +167,64 @@ function displayEtymology(dictionaryArr) {
   $(".dictionary").removeClass("hidden");
 
   //render results to the DOM
+
+  testEtymologies(dictionaryArr);
+}
+function testEtymologies(dictInfo) {
   $(".dictionary ul").append(`
-  <li class="origin"><p>Origin(s):</p></li>`);
-
+  <li class="origins hidden"><p>Origin(s):</p></li>`);
   // test for presence of "et" key
-  for (let i = 0; i < dictionaryArr.length; i++) {
-    if ("et" in dictionaryArr[i]) {
+  for (let i = 0; i < dictInfo.length; i++) {
+    if (dictInfo[i].et) {
       // if et exists, render the contents at index 1 of each of its arrays to the DOM
-      for (let index = 0; index < dictionaryArr[i].et.length; index++) {
-        let etymologies = `${dictionaryArr[i].et[index][1]}`;
+      for (let index = 0; index < dictInfo[i].et.length; index++) {
+        let etymologies = `${dictInfo[i].et[index][1]}`;
         console.log("this is etymologies: ", etymologies);
-
-        $(".dictionary li.origin").append(
-          `<p>${formatEtymologies(etymologies)}</p>`
-        );
+        $("li.origins").removeClass("hidden");
+        $("li.origins").append(`<p>${formatEtymologies(etymologies)}</p>`);
       }
     } else {
-      console.log("sorry :(");
+      console.log(`no luck`);
     }
   }
 }
+
 function formatEtymologies(rawString) {
-  const regex1 = /{/g;
-  const regex2 = /}/g;
-  const regex3 = /it(?=>)/g;
-  let firstCleanup = rawString.replace(regex1, "<");
-  let secondCleanup = firstCleanup.replace(regex2, ">");
-  let cleanedUpEtymologies = secondCleanup.replace(regex3, "i");
+  const regex1 = /{it}/g;
+  const regex2 = /{\/it}/g;
+  let firstCleanup = rawString.replace(regex1, `"`);
+  let cleanedUpEtymologies = firstCleanup.replace(regex2, `"`);
+
   console.log("no more stupid {i}???", cleanedUpEtymologies);
   return cleanedUpEtymologies;
 }
 
 function displayWiki(wikiObj) {
   $(".wiki").removeClass("hidden");
-
   $(".wiki ul").append(`
-  <li class="wiki"><p>Wikipedia page(s):</p></li>
-  <p class="wiki-title">${wikiObj.displaytitle}</p>
-  <p><a href="${wikiObj["content_urls"].desktop.page}">${wikiObj["content_urls"].desktop.page}</a></p>
-  ${wikiObj["extract_html"]}`);
+  <li class="wiki"><p>Wikipedia page(s):</p></li>`);
+
+  testWiki(wikiObj);
 
   console.log(`displayWiki ran`);
 }
-
+function testWiki(obj) {
+  if (obj.type !== "standard") {
+    $("li.wiki").append(`<p class="wiki-title bold">${obj.displaytitle}</p>
+  <p><a target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a></p>
+  <p class="ital">(${obj.description})</p>`);
+  } else {
+    $("li.wiki").append(`<p class="wiki-title bold">${obj.displaytitle}</p>
+  <p><a target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a></p>
+   <p>${obj["extract"]}</p>`);
+  }
+}
 function displayLibrary(libraryData) {
   $(".newspapers").removeClass("hidden");
 
   $(".newspapers ul").append(`
-  <li class="newspapers"><p>"${searchTerm}" as used in newspapers throughout American history:<br />(Please note that the relevancy of search results is limited by the accuracy of the Library of Congess' text recognition software that scanned the newspaper images):</p></li>`);
+  <li class="newspapers"><p>"${searchTerm}" as used in newspapers throughout American history:</p>
+  <p class="disclaimer ital">(Search results' relevance limited by accuracy of text recognition software used):</p></li>`);
 
   $(generateNewspaperResults(libraryData));
 
@@ -218,7 +238,7 @@ function generateNewspaperResults(libObj) {
     let rawTitle = newsArray[i].title;
     let rawDate = newsArray[i].date;
 
-    $(".newspapers li").append(`<p>${rawTitle.split(".")[0]}</p>
+    $(".newspapers li").append(`<p class="ital">${rawTitle.split(".")[0]}</p>
     <p>Date published: ${normalizeDate(rawDate)}</p>
     <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${
       newsArray[i].id
