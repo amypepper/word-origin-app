@@ -9,7 +9,9 @@ body {
 *:after {
   box-sizing: inherit;
 }
-
+body * {
+  line-height: 150%;
+}
 body,
 body > *,
 .ap-search-form > *,
@@ -21,8 +23,6 @@ body > *,
   padding: 1%;
 }
 
-/******************** GLOBAL ********************/
-
 body > *,
 .ap-search-form > *,
 .ap-submit-button-div {
@@ -32,6 +32,12 @@ body > *,
   justify-content: center;
   padding: 1%;
 }
+body * {
+  margin: 5px 10px;
+}
+ul {
+  padding: 0;
+}
 
 /******************** FORM ********************/
 
@@ -40,8 +46,14 @@ body > *,
   flex-direction: row;
   align-items: center;
 }
-.search-instructions {
-  font-style: italic;
+
+.search-instructions,
+.disclaimer {
+  width: 250px;
+  min-height: 50px;
+  font-size: 1rem;
+  padding: 5px;
+  margin-top: 0px;
 }
 .form-validation {
   color: red;
@@ -49,21 +61,26 @@ body > *,
   padding: 5px;
   margin: 10px 5px 10px 0px;
 }
-input,
-.search-instructions {
+input[id="word-search"] {
   width: 200px;
   min-height: 50px;
+  text-align: center;
+  margin: 0;
 }
 .ap-submit-button {
   width: 100px;
   min-height: 50px;
-  margin: 10px;
+  margin: 0;
 }
 
-.form-validation {
+.ap-submit-button-div {
+  margin: 5px;
   padding-right: 20px;
 }
-
+.form-validation-advice {
+  margin: 0;
+  width: 250px;
+}
 .form-validation-fail:after {
   content: "✖";
   padding-left: 10px;
@@ -79,6 +96,25 @@ input,
 }
 
 /******************** MAIN ********************/
+li {
+  border: 2px gray solid;
+  list-style: none;
+}
+.js-search-results,
+.js-results-list,
+a {
+  overflow-wrap: break-word;
+  width: 300px;
+}
+/**************** HELPER CLASSES ****************/
+
 .hidden {
   display: none;
+}
+
+.ital {
+  font-style: italic;
+}
+.bold {
+  font-weight: bold;
 }
