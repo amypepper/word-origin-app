@@ -136,9 +136,11 @@ function displayDictionaryDefs(dictionaryArr) {
 
   //render results to the DOM
   $(".dictionary ul").append(`
-   <li class="dictionary"><p>Definition(s):</p></li>`);
+   <li class="dictionary"><p class="bold">Related Definitions:</p></li>`);
 
   generateDefinitions(dictionaryArr);
+
+  console.log(`displayDictionaryDefs ran`);
 }
 
 function generateDefinitions(dictInfo) {
@@ -154,12 +156,24 @@ function generateDefinitions(dictInfo) {
   } else {
     // grab all matching dictionary definitions
     dictInfo.forEach(dictObj => {
-      console.log(dictObj.shortdef);
-      dictObj.shortdef.forEach(sense => {
-        $("li.dictionary").append(`<p>${sense}</p>`);
-      });
+      // console.log(dictObj.shortdef);
+      // let senses = dictObj.shortdef.forEach(sense => {
+      //   let i = 0;
+      //   $("li.dictionary").append(`<p class="sense${i}">${sense}</p>`);
+      //   i++;
+
+      // }
+      // return senses
+      // );
+
+      let headWord = `${dictObj.hwi.hw}`;
+      let senses = dictObj.shortdef;
+      $("li.dictionary").append(
+        `<p><span class="ital">${headWord}:</span>${senses.join("; ")}</p>`
+      );
     });
   }
+  console.log(`generateDefinitions ran`);
 }
 
 function displayEtymology(dictionaryArr) {
@@ -172,19 +186,22 @@ function displayEtymology(dictionaryArr) {
 }
 function testEtymologies(dictInfo) {
   $(".dictionary ul").append(`
-  <li class="origins hidden"><p>Origin(s):</p></li>`);
+  <li class="origins hidden"><p class="bold">Related Word Origin(s):</p></li>`);
   // test for presence of "et" key
   for (let i = 0; i < dictInfo.length; i++) {
     if (dictInfo[i].et) {
       // if et exists, render the contents at index 1 of each of its arrays to the DOM
-      for (let index = 0; index < dictInfo[i].et.length; index++) {
-        let etymologies = `${dictInfo[i].et[index][1]}`;
-        console.log("this is etymologies: ", etymologies);
-        $("li.origins").removeClass("hidden");
-        $("li.origins").append(`<p>${formatEtymologies(etymologies)}</p>`);
-      }
-    } else {
-      console.log(`no luck`);
+      $("li.origins").removeClass("hidden");
+      dictInfo[i].et.forEach(etItem => {
+        if (etItem[1].includes('{et')) {
+          $("li.origins").html(`<p class="bold">Related Word Origin(s):</p>
+          <p class="ital">Sorry, we can't find an etymology for your search</p>`)
+        } else {
+          $('li.origins').empty()
+          $("li.origins").append(`<p class="bold">Related Word Origin(s):</p><p><span class="ital">${dictInfo[i].hwi.hw}:</span>${formatEtymologies(etItem[1])}</p>`);
+        }
+      })
+    
     }
   }
 }
@@ -202,7 +219,7 @@ function formatEtymologies(rawString) {
 function displayWiki(wikiObj) {
   $(".wiki").removeClass("hidden");
   $(".wiki ul").append(`
-  <li class="wiki"><p>Wikipedia page(s):</p></li>`);
+  <li class="wiki"><p class="bold">Wikipedia page(s):</p></li>`);
 
   testWiki(wikiObj);
 
@@ -210,7 +227,7 @@ function displayWiki(wikiObj) {
 }
 function testWiki(obj) {
   if (obj.type !== "standard") {
-    $("li.wiki").append(`<p class="wiki-title bold">${obj.displaytitle}</p>
+    $("li.wiki").append(`<p class="wiki-title ital">${obj.displaytitle}</p>
   <p><a target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a></p>
   <p class="ital">(${obj.description})</p>`);
   } else {
@@ -223,8 +240,8 @@ function displayLibrary(libraryData) {
   $(".newspapers").removeClass("hidden");
 
   $(".newspapers ul").append(`
-  <li class="newspapers"><p>"${searchTerm}" as used in newspapers throughout American history:</p>
-  <p class="disclaimer ital">(Search results' relevance limited by accuracy of text recognition software used):</p></li>`);
+  <li class="newspapers"><p class="bold">"${searchTerm}" as used in newspapers throughout American history:</p>
+  <p class="disclaimer ital">(Search results' relevance limited by accuracy of text recognition software):</p></li>`);
 
   $(generateNewspaperResults(libraryData));
 
