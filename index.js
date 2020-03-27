@@ -245,6 +245,7 @@ function displayLibrary(libraryData) {
 
   $(generateNewspaperResults(libraryData));
 
+  $('li.newspapers').append(`<p class="bold ital"><a href="newspaper-search-results.html">See more results here</a></p>`)
   console.log(`displayLibrary ran`);
 }
 
@@ -261,8 +262,11 @@ function generateNewspaperResults(libObj) {
       newsArray[i].id
     }/ocr/">View newspaper (opens in new tab)</a></p>
     `);
+    
   }
 }
+
+
 function normalizeDate(dateString) {
   return `${dateString.slice(4, 6)}/${dateString.slice(
     6,
