@@ -192,7 +192,7 @@ function testEtymologies(dictInfo) {
     if (dictInfo[i].et) {
       // if et exists, render the contents at index 1 of each of its arrays to the DOM
       dictInfo[i].et.forEach(etItem => {
-        if (etItem[1].includes("{et")) {
+        if (/^{/.test(etItem[1])) {
           console.log("bad cross-reference");
         } else {
           $("li.origins").append(
