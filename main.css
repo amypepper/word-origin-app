@@ -38,6 +38,13 @@ body * {
 ul {
   padding: 0;
 }
+li {
+  margin-bottom: 20px;
+}
+h2 {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+}
 
 /******************** FORM ********************/
 
@@ -106,6 +113,9 @@ a {
   overflow-wrap: break-word;
   width: 300px;
 }
+.newspaper-title {
+  margin-bottom: 5px;
+}
 /**************** HELPER CLASSES ****************/
 
 .hidden {
@@ -117,4 +127,7 @@ a {
 }
 .bold {
   font-weight: bold;
+}
+.center-text {
+  text-align: center;
 }

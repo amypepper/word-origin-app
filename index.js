@@ -136,10 +136,13 @@ function displayDictionaryDefs(dictionaryArr) {
 
   //render results to the DOM
   $(".dictionary ul").append(`
-   <li class="dictionary"><p class="bold">Related Definitions:</p></li>`);
+   <li class="dictionary"><h2 class="center-text">Related Definitions:</h2></li>`);
 
   generateDefinitions(dictionaryArr);
 
+  $("li.dictionary").append(
+    `<p class="center-text"><a target="_blank" href="https://www.merriam-webster.com/">Click here to visit Merriam-Webster's online dictionary</a></p>`
+  );
   console.log(`displayDictionaryDefs ran`);
 }
 
@@ -156,20 +159,12 @@ function generateDefinitions(dictInfo) {
   } else {
     // grab all matching dictionary definitions
     dictInfo.forEach(dictObj => {
-      // console.log(dictObj.shortdef);
-      // let senses = dictObj.shortdef.forEach(sense => {
-      //   let i = 0;
-      //   $("li.dictionary").append(`<p class="sense${i}">${sense}</p>`);
-      //   i++;
-
-      // }
-      // return senses
-      // );
-
       let headWord = `${dictObj.hwi.hw}`;
       let senses = dictObj.shortdef;
       $("li.dictionary").append(
-        `<p><span class="ital">${headWord}:</span>${senses.join("; ")}</p>`
+        `<li><p><span class="ital">${headWord}:</span>${senses.join(
+          "; "
+        )}</p></li>`
       );
     });
   }
@@ -181,27 +176,32 @@ function displayEtymology(dictionaryArr) {
   $(".dictionary").removeClass("hidden");
 
   //render results to the DOM
-
   testEtymologies(dictionaryArr);
+
+  $("li.origins").append(
+    `<p class="center-text"><a target="_blank" href="https://www.merriam-webster.com/">Click here to visit Merriam-Webster's online dictionary</a></p>`
+  );
 }
+
 function testEtymologies(dictInfo) {
   $(".dictionary ul").append(`
-  <li class="origins hidden"><p class="bold">Related Word Origin(s):</p></li>`);
+  <li class="origins" id="origin-id"><h2 class="center-text">Related Word Origin(s):</h2></li>`);
+
   // test for presence of "et" key
   for (let i = 0; i < dictInfo.length; i++) {
     if (dictInfo[i].et) {
       // if et exists, render the contents at index 1 of each of its arrays to the DOM
-      $("li.origins").removeClass("hidden");
       dictInfo[i].et.forEach(etItem => {
-        if (etItem[1].includes('{et')) {
-          $("li.origins").html(`<p class="bold">Related Word Origin(s):</p>
-          <p class="ital">Sorry, we can't find an etymology for your search</p>`)
+        if (etItem[1].includes("{et")) {
+          console.log("bad cross-reference");
         } else {
-          $('li.origins').empty()
-          $("li.origins").append(`<p class="bold">Related Word Origin(s):</p><p><span class="ital">${dictInfo[i].hwi.hw}:</span>${formatEtymologies(etItem[1])}</p>`);
+          $("li.origins").append(
+            `<li><p><span class="ital">${
+              dictInfo[i].hwi.hw
+            }:</span>${formatEtymologies(etItem[1])}</p></li>`
+          );
         }
-      })
-    
+      });
     }
   }
 }
@@ -219,7 +219,7 @@ function formatEtymologies(rawString) {
 function displayWiki(wikiObj) {
   $(".wiki").removeClass("hidden");
   $(".wiki ul").append(`
-  <li class="wiki"><p class="bold">Wikipedia page(s):</p></li>`);
+  <li class="wiki"><h2 class="center-text">Wikipedia page(s):</h2></li>`);
 
   testWiki(wikiObj);
 
@@ -233,18 +233,21 @@ function testWiki(obj) {
   } else {
     $("li.wiki").append(`<p class="wiki-title bold">${obj.displaytitle}</p>
   <p><a target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a></p>
-   <p>${obj["extract"]}</p>`);
+   <article>${obj["extract"]}</article>`);
   }
 }
 function displayLibrary(libraryData) {
   $(".newspapers").removeClass("hidden");
 
   $(".newspapers ul").append(`
-  <li class="newspapers"><p class="bold">"${searchTerm}" as used in newspapers throughout American history:</p>
+  <li class="newspapers"><h2 class="center-text newspaper-title">"${searchTerm}" as used in newspapers throughout American history:</h2>
   <p class="disclaimer ital">(Search results' relevance limited by accuracy of text recognition software):</p></li>`);
 
   $(generateNewspaperResults(libraryData));
 
+  $("li.newspapers").append(
+    `<p class="center-text"><a target="_blank" href="https://chroniclingamerica.loc.gov/">Search for more results from the Library of Congress' database</a></p>`
+  );
   console.log(`displayLibrary ran`);
 }
 
@@ -255,11 +258,11 @@ function generateNewspaperResults(libObj) {
     let rawTitle = newsArray[i].title;
     let rawDate = newsArray[i].date;
 
-    $(".newspapers li").append(`<p class="ital">${rawTitle.split(".")[0]}</p>
+    $("li.newspapers").append(`<li><p class="ital">${rawTitle.split("[")[0]}</p>
     <p>Date published: ${normalizeDate(rawDate)}</p>
-    <p><a target="_blank" href="https://chroniclingamerica.loc.gov/${
+    <p class="news-link"><a target="_blank" href="https://chroniclingamerica.loc.gov/${
       newsArray[i].id
-    }/ocr/">View newspaper (opens in new tab)</a></p>
+    }/ocr/">View newspaper (opens in new tab)</a></p></li>
     `);
   }
 }
