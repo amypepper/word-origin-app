@@ -15,46 +15,62 @@
     <title>Word Origins App</title>
   </head>
   <body>
-    <h1 class="center-text">Where'd that word come from?</h1>
-    <form class="js-search ap-search-form">
-      <label for="word-search"
-        >Type in an English word and hit search to find out about its history.
-        See its etymology and examples of its usage in the past</label
-      >
-      <p class="search-instructions ital">(Please enter only letters)</p>
-      <span class="form-validation-advice"></span>
-      <div class="ap-search-input">
-        <input
-          x-webkit-speech
-          id="word-search"
-          type="text"
-          placeholder="Enter a word here"
-          spellcheck="true"
-          autocomplete="en"
-        />
-        <span class="form-validation-success hidden"></span>
-        <span class="form-validation-fail hidden"></span>
-      </div>
+    <header>
+      <h1 class="center-text">Where'd that word come from?</h1>
+      <form class="js-search ap-search-form">
+        <div class="search-instructions-div">
+          <label for="word-search"
+            >Type in an English word and hit search to find out about its
+            history. See its etymology and examples of its usage in the
+            past</label
+          >
+          <p class="search-instructions ital center-text">
+            (Please enter only letters)
+          </p>
+          <span class="form-validation-advice"></span>
+        </div>
+        <div class="ap-search-input">
+          <input
+            x-webkit-speech
+            id="word-search"
+            type="text"
+            placeholder="Enter a word here"
+            spellcheck="true"
+            autocomplete="en"
+          />
+          <span class="form-validation-success hidden"></span>
+          <span class="form-validation-fail hidden"></span>
+        </div>
 
-      <div class="ap-submit-button-div">
-        <button class="ap-submit-button" type="submit">Search</button>
-      </div>
-    </form>
-    <span class="search-error"></span>
-    <section class="js-search-results dictionary hidden">
-      <ul class="js-results-list"></ul>
-    </section>
-    <section class="js-search-results wiki hidden">
-      <ul class="js-results-list"></ul>
-    </section>
-    <section class="js-search-results newspapers hidden">
-      <ul class="js-results-list"></ul>
-    </section>
+        <div class="ap-submit-button-div">
+          <button class="ap-submit-button" type="submit">Search</button>
+        </div>
+
+        <span class="search-error hidden"></span>
+      </form>
+    </header>
+    <main>
+      <section class="js-definitions-sec definitions hidden">
+        <ul class="js-results-list js-definitions-ul definitions"></ul>
+      </section>
+      <section class="js-origins-sec origins hidden">
+        <ul class="js-results-list js-origins-ul origins"></ul>
+      </section>
+      <section class="js-wiki-sec wiki hidden">
+        <ul class="js-results-list js-wiki-ul wiki"></ul>
+      </section>
+      <section class="js-newspapers-sec newspapers hidden">
+        <ul class="js-results-list js-newspapers-ul newspapers"></ul>
+      </section>
+    </main>
     <script
       src="https://code.jquery.com/jquery-3.4.1.js"
       integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
       crossorigin="anonymous"
     ></script>
     <script src="index.js"></script>
+    <script src="libraryAPI.js"></script>
+    <script src="wikiAPI.js"></script>
+    <script src="dictionaryAPI.js"></script>
   </body>
 </html>

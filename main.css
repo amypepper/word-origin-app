@@ -1,3 +1,11 @@
+/* color palette (light to dark)
+
+#5CA1CC (light sky blue)
+#A7B7C2 (pastel/linen blue)
+#7B878F (light gray)
+#364853 (dark blue gray)
+#393F42 (slate gray) */
+
 /******************** RESET ********************/
 
 html,
@@ -11,30 +19,38 @@ body {
 }
 body * {
   line-height: 150%;
+  color: #393f42;
+  font-weight: bold;
+  width: 100%;
+}
+div * {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 body,
-body > *,
+body *,
+div,
+div *,
+header,
+header *,
+main,
+main *,
 .ap-search-form > *,
-.ap-submit-button-div {
+.ap-submit-button-div,
+.search-instructions-div {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1%;
+  padding: 5px;
+}
+section,
+section *,
+a {
+  overflow-wrap: break-word;
 }
 
-body > *,
-.ap-search-form > *,
-.ap-submit-button-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1%;
-}
-body * {
-  margin: 5px 10px;
-}
 ul {
   padding: 0;
 }
@@ -43,24 +59,35 @@ li {
 }
 h2 {
   font-size: 1.25rem;
-  margin-bottom: 20px;
+}
+
+/******************** GLOBAL ********************/
+
+body {
+  background-color: #364853;
 }
 
 /******************** FORM ********************/
 
+label {
+  margin: 0;
+  padding: 10px 10px 5px 10px;
+}
 .ap-search-input {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-
+form {
+  padding: 10px;
+}
 .search-instructions,
 .disclaimer {
   width: 250px;
-  min-height: 50px;
   font-size: 1rem;
   padding: 5px;
   margin-top: 0px;
+  margin-block-end: 0;
 }
 .form-validation {
   color: red;
@@ -73,16 +100,27 @@ input[id="word-search"] {
   min-height: 50px;
   text-align: center;
   margin: 0;
+  color: #393f42;
 }
 .ap-submit-button {
   width: 100px;
   min-height: 50px;
   margin: 0;
+  border-radius: 5px;
+  border-style: none;
+  background-color: #5ca1cc;
+  color: #393f42;
+}
+.ap-search-form div {
+  margin-bottom: 20px;
 }
 
 .ap-submit-button-div {
-  margin: 5px;
   padding-right: 20px;
+}
+.search-instructions-div {
+  background-color: #5ca1cc;
+  width: 90%;
 }
 .form-validation-advice {
   margin: 0;
@@ -99,20 +137,33 @@ input[id="word-search"] {
   content: "✓";
   padding-left: 10px;
   font-size: 40px;
-  color: green;
+  color: rgb(7, 202, 7);
 }
-
+.search-error {
+  width: 90%;
+  background-color: #a7b7c2;
+}
 /******************** MAIN ********************/
+h1 {
+  margin: 15px 0;
+  padding: 10px 5px;
+  color: #a7b7c2;
+  width: 100%;
+}
 li {
-  border: 2px gray solid;
   list-style: none;
 }
-.js-search-results,
-.js-results-list,
-a {
-  overflow-wrap: break-word;
-  width: 300px;
+
+section {
+  background-color: #7b878f;
+  width: 95%;
+  margin: 10px;
 }
+ul.definitions * {
+  margin-block-end: 5px;
+  margin-block-start: 5px;
+}
+
 .newspaper-title {
   margin-bottom: 5px;
 }
@@ -126,7 +177,7 @@ a {
   font-style: italic;
 }
 .bold {
-  font-weight: bold;
+  font-weight: bolder;
 }
 .center-text {
   text-align: center;

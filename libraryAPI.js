@@ -18,15 +18,15 @@ function libraryCall(url) {
 }
 
 function displayLibrary(libraryData) {
-  $(".newspapers").removeClass("hidden");
+  $(".js-newspapers-sec").removeClass("hidden");
 
-  $(".newspapers ul").append(`
-    <li class="newspapers"><h2 class="center-text newspaper-title">"${searchTerm}" as used in newspapers throughout American history:</h2>
-    <p class="disclaimer ital">(Search results' relevance limited by accuracy of text recognition software):</p></li>`);
+  $(".js-newspapers-ul").append(`
+    <h2 class="center-text newspaper-title">"${searchTerm}" as used in newspapers throughout American history:</h2>
+    <p class="disclaimer ital">(Search results' relevance limited by accuracy of text recognition software):</p>`);
 
   $(generateNewspaperResults(libraryData));
 
-  $("li.newspapers").append(
+  $(".js-newspapers-sec").append(
     `<p class="center-text"><a target="_blank" href="https://chroniclingamerica.loc.gov/">Search for more results from the Library of Congress' database</a></p>`
   );
   console.log(`displayLibrary ran`);
@@ -39,7 +39,9 @@ function generateNewspaperResults(libObj) {
     let rawTitle = newsArray[i].title;
     let rawDate = newsArray[i].date;
 
-    $("li.newspapers").append(`<li><p class="ital">${rawTitle.split("[")[0]}</p>
+    $(".js-newspapers-ul").append(`<li><p class="ital">${
+      rawTitle.split("[")[0]
+    }</p>
       <p>Date published: ${normalizeDate(rawDate)}</p>
       <p class="news-link"><a target="_blank" href="https://chroniclingamerica.loc.gov/${
         newsArray[i].id

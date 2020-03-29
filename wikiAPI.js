@@ -18,9 +18,9 @@ function wikiCall(url, options) {
 }
 
 function displayWiki(wikiObj) {
-  $(".wiki").removeClass("hidden");
-  $(".wiki ul").append(`
-    <li class="wiki"><h2 class="center-text">Wikipedia page(s):</h2></li>`);
+  $(".js-wiki-sec").removeClass("hidden");
+  $(".js-wiki-ul").append(`
+    <h2 class="center-text">Wikipedia page(s):</h2>`);
 
   testWiki(wikiObj);
 
@@ -28,12 +28,14 @@ function displayWiki(wikiObj) {
 }
 function testWiki(obj) {
   if (obj.type !== "standard") {
-    $("li.wiki").append(`<p class="wiki-title ital">${obj.displaytitle}</p>
+    $(".js-wiki-ul")
+      .append(`<li><p class="wiki-title ital">${obj.displaytitle}</p>
     <p><a target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a></p>
-    <p class="ital">(${obj.description})</p>`);
+    <p class="ital">(${obj.description})</p></li>`);
   } else {
-    $("li.wiki").append(`<p class="wiki-title bold">${obj.displaytitle}</p>
+    $(".js-wiki-ul")
+      .append(`<li><p class="wiki-title bold">${obj.displaytitle}</p>
     <p><a target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a></p>
-     <article>${obj["extract"]}</article>`);
+     <article>${obj["extract"]}</article></li>`);
   }
 }
