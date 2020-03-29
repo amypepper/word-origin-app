@@ -22,7 +22,7 @@ function displayLibrary(libraryData) {
 
   $(".js-newspapers-ul").append(`
     <h2 class="center-text newspaper-title">"${searchTerm}" as used in newspapers throughout American history:</h2>
-    <p class="disclaimer ital">(Search results' relevance limited by accuracy of text recognition software):</p>`);
+    <p class="disclaimer ital center-text">(Search results' relevance limited by accuracy of text recognition software):</p>`);
 
   $(generateNewspaperResults(libraryData));
 
@@ -43,9 +43,9 @@ function generateNewspaperResults(libObj) {
       rawTitle.split("[")[0]
     }</p>
       <p>Date published: ${normalizeDate(rawDate)}</p>
-      <p class="news-link"><a target="_blank" href="https://chroniclingamerica.loc.gov/${
-        newsArray[i].id
-      }/ocr/">View newspaper (opens in new tab)</a></p></li>
+     <a class="news-link" target="_blank" href="https://chroniclingamerica.loc.gov/${
+       newsArray[i].id
+     }/ocr/">View newspaper (opens in new tab)</a></li>
       `);
   }
 }
