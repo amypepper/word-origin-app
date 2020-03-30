@@ -71,14 +71,23 @@ function testEtymologies(dictInfo) {
     if (dictInfo[i].et) {
       // if et exists, render the contents at index 1 of each of its arrays to the DOM
       dictInfo[i].et.forEach(etItem => {
-        const regex = /{[^/i]/g;
-        if (regex.test(etItem[1])) {
-          console.log("bad cross-reference");
+        console.log("this is etItem: ", etItem);
+
+        if (Array.isArray(etItem[1])) {
+          etItem[1].forEach(innerEtItem => {
+            $(".js-origins-ul").append(
+              `<p>Supplemental notes: ${innerEtItem[1]}</p>`
+            );
+          });
+          // } else if (regex.test(etItem[1])) {
+          //   console.log("bad cross-reference:", etItem[1]);
         } else {
           $(".js-origins-ul").append(
-            `<li><p><span class="ital">${
-              dictInfo[i].hwi.hw
-            }:</span>${formatEtymologies(etItem[1])}</p></li>`
+            `<li>
+                <p><span class="ital">${
+                  dictInfo[i].hwi.hw
+                }:</span>${formatEtymologies(etItem[1])}</p>
+              </li>`
           );
         }
       });
@@ -89,6 +98,12 @@ function testEtymologies(dictInfo) {
 function formatEtymologies(rawString) {
   const regex1 = /{it}/g;
   const regex2 = /{\/it}/g;
+  // const regex3 = /{et_link\|.+\|.+}/g;
+  // const crossRef = rawString.match(/{et_link\|.+\|.+}/g)
+  // const targetId = crossRef.forEach(matchItem => {
+  //   matchItem.split('|').flat()
+  // })
+  // let firstCleanup = rawString.replace(regex3, `<a href=""></a>`;
   let firstCleanup = rawString.replace(regex1, `"`);
   let cleanedUpEtymologies = firstCleanup.replace(regex2, `"`);
 
