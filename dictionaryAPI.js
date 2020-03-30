@@ -12,23 +12,18 @@ function dictionaryCall(url) {
       displayDictionaryDefs(dictionaryJson);
       displayEtymology(dictionaryJson);
     })
-    .catch(err => $(".search-error").html(`Something went wrong: (${err})`));
+    .catch(err => $(".search-error").text(`${err}`));
 }
 
 function displayDictionaryDefs(dictionaryArr) {
   console.log("this is dictionaryArr: ", dictionaryArr);
+
   // remove hidden class so results will show
   $(".js-definitions-sec").removeClass("hidden");
-
-  $(".js-definitions-sec").prepend(`
-     <h2 class="center-text">Related Definitions:</h2>`);
 
   //render results to the DOM
   generateDefinitions(dictionaryArr);
 
-  $(".js-definitions-sec").append(
-    `<p class="center-text"><a target="_blank" href="https://www.merriam-webster.com/">Click here to visit Merriam-Webster's online dictionary</a></p>`
-  );
   console.log(`displayDictionaryDefs ran`);
 }
 
@@ -45,13 +40,18 @@ function generateDefinitions(dictInfo) {
   } else {
     // grab all matching dictionary definitions
     dictInfo.forEach(dictObj => {
-      let headWord = `${dictObj.hwi.hw}`;
-      let senses = dictObj.shortdef;
-      $(".js-definitions-ul").append(
-        `<li><p><span class="ital">${headWord}:</span>${senses.join(
-          "; "
-        )}</p></li>`
-      );
+      // check whether shortdef is empty first
+      if (dictObj.shortdef.length === 0) {
+        console.log("empty array- no definition text");
+      } else {
+        let headWord = `${dictObj.hwi.hw}`;
+        let senses = dictObj.shortdef;
+        $(".js-definitions-ul").append(
+          `<li><p><span class="ital">${headWord}:</span>${senses.join(
+            "; "
+          )}</p></li>`
+        );
+      }
     });
   }
   console.log(`generateDefinitions ran`);
@@ -61,15 +61,8 @@ function displayEtymology(dictionaryArr) {
   // remove hidden class so results will show
   $(".js-origins-sec").removeClass("hidden");
 
-  $(".js-origins-sec").prepend(`
-    <h2 class="center-text">Related Word Origin(s):</h2>`);
-
   //render results to the DOM
   testEtymologies(dictionaryArr);
-
-  $(".js-origins-sec").append(
-    `<p class="center-text"><a target="_blank" href="https://www.merriam-webster.com/">Click here to visit Merriam-Webster's online dictionary</a></p>`
-  );
 }
 
 function testEtymologies(dictInfo) {

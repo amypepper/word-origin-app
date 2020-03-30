@@ -72,6 +72,9 @@ function runSearches(searchString) {
 
   const libraryApi = `https://chroniclingamerica.loc.gov/search/pages/results/?andtext=${searchString}&format=json`;
 
+  // make sure page is clear
+  $(".js-results-list").empty();
+
   //call dictionary API
   dictionaryCall(dictionaryApi);
 

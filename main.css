@@ -73,7 +73,7 @@ a {
 li > p {
   margin: 0;
 }
-h2 {
+h2, .search-term-holder {
   font-size: 1.5rem;
   font-family: "Cutive Mono", monospace;
   color: black;
@@ -96,11 +96,10 @@ a:hover {
   background-color: #5ca1cc;
   font-style: italic;
 }
-a:visited {
+.news-link:visited {
   color: rgb(70, 0, 128);
 }
-button:focus,
-button:hover,
+
 input[id="word-search"]:focus,
 input[id="word-search"]:hover {
   background-color: #5ca1cc;
@@ -166,8 +165,12 @@ input[id="word-search"] {
   border-radius: 5px;
   border-style: none;
   font-family: "Cutive Mono", monospace;
-  background-color: #a7b7c2;
+  background-color: #5ca1cc;
   color: #393f42;
+}
+.ap-submit-button:focus,
+.ap-submit-button:hover {
+  background-color: #a7b7c2;
 }
 .ap-search-form div {
   margin-bottom: 20px;
@@ -180,8 +183,10 @@ input[id="word-search"] {
   background-color: #5ca1cc;
   font-size: 1.25rem;
 }
-.form-validation-advice {
+.form-validation-advice, .search-error {
   margin: 0;
+  color: darkred;
+  background-color: #5ca1cc;
 }
 span.form-validation-fail,
 span.form-validation-success {
@@ -201,10 +206,7 @@ span.form-validation-success::after {
   font-size: 40px;
   color: rgb(7, 202, 7);
 }
-.search-error {
-  width: 90%;
-  background-color: #a7b7c2;
-}
+
 /******************** MAIN ********************/
 h1 {
   margin: 15px 0;
@@ -221,6 +223,9 @@ section {
   background-color: #7b878f;
   width: 95%;
   margin: 10px;
+}
+.perma-link {
+  text-align: center;
 }
 .newspapers li * {
   align-items: flex-start;
@@ -256,6 +261,7 @@ a.news-link {
 li:nth-child(2n) a:hover, li:nth-child(2n) a:focus {
 background-color: #7b878f;
 }
+
 /**************** HELPER CLASSES ****************/
 
 .hidden {
@@ -274,7 +280,7 @@ background-color: #7b878f;
 
 /**************** MEDIA QUERIES ****************/
 @media screen and (min-width: 700px) {
-  h2 {
+  h2, .search-term-holder {
     font-size: 2rem;
   }
 

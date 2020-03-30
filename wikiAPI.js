@@ -6,21 +6,22 @@ function wikiCall(url, options) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(
-        `Wikipedia couldn't find a page that related to your search.`
-      );
+      throw new Error(response.statusText);
     })
+
     .then(wikiJson => {
       console.log("this is wikipedia json: ", wikiJson);
       displayWiki(wikiJson);
     })
-    .catch(err => $(".search-error").html(`<p>${err}</p>`));
+    .catch(err =>
+      $(".search-error").text(
+        `${err}: Wikipedia couldn't find an article with that title`
+      )
+    );
 }
 
 function displayWiki(wikiObj) {
   $(".js-wiki-sec").removeClass("hidden");
-  $(".js-wiki-sec").prepend(`
-    <h2 class="center-text">Wikipedia page(s):</h2>`);
 
   testWiki(wikiObj);
 

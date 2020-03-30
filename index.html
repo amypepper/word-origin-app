@@ -32,6 +32,7 @@
             (Please enter only letters)
           </p>
           <span class="form-validation-advice"></span>
+          <span class="search-error"></span>
         </div>
         <div class="ap-search-input-div">
           <input
@@ -48,25 +49,52 @@
         <div class="ap-submit-button-div">
           <button class="ap-submit-button" type="submit">Search</button>
         </div>
-
-        <span class="search-error hidden"></span>
       </form>
     </header>
     <main>
       <section class="js-definitions-sec definitions hidden">
+        <h2 class="center-text">Related Definitions:</h2>
         <ul class="js-results-list js-definitions-ul definitions"></ul>
+        <a
+          class="perma-link"
+          target="_blank"
+          href="https://www.merriam-webster.com/"
+          >Click here to visit Merriam-Webster's online dictionary</a
+        >
       </section>
       <div class="ap-flex-wrapper">
         <div class="ap-inner-flex-wrapper">
           <section class="js-origins-sec origins hidden">
+            <h2 class="center-text">Related Word Origin(s):</h2>
             <ul class="js-results-list js-origins-ul origins"></ul>
+            <a
+              class="perma-link"
+              target="_blank"
+              href="https://www.merriam-webster.com/"
+              >Click here to visit Merriam-Webster's online dictionary</a
+            >
           </section>
           <section class="js-wiki-sec wiki hidden">
+            <h2 class="center-text">Wikipedia page(s):</h2>
             <ul class="js-results-list js-wiki-ul wiki"></ul>
           </section>
         </div>
         <section class="js-newspapers-sec newspapers hidden">
+          <h2 class="center-text newspaper-title">
+            <span class="search-term-holder"></span>as used in newspapers
+            throughout American history:
+          </h2>
+          <p class="disclaimer ital center-text">
+            (Search results' relevance limited by accuracy of text recognition
+            software):
+          </p>
           <ul class="js-results-list js-newspapers-ul newspapers"></ul>
+          <a
+            class="perma-link"
+            target="_blank"
+            href="https://chroniclingamerica.loc.gov/"
+            >Search for more results from the Library of Congress' database</a
+          >
         </section>
       </div>
     </main>

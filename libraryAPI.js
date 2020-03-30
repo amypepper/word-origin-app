@@ -12,22 +12,15 @@ function libraryCall(url) {
       console.log("this is libraryJson: ", libraryJson);
       displayLibrary(libraryJson);
     })
-    .catch(err =>
-      $(".search-error").html(`<p>Something went wrong: (${err})</p>`)
-    );
+    .catch(err => $(".search-error").text(`${err}`));
 }
 
 function displayLibrary(libraryData) {
   $(".js-newspapers-sec").removeClass("hidden");
-  $(".js-newspapers-sec")
-    .prepend(`<h2 class="center-text newspaper-title">"${searchTerm}" as used in newspapers throughout American history:</h2>
-  <p class="disclaimer ital center-text">(Search results' relevance limited by accuracy of text recognition software):</p>`);
+  $(".search-term-holder").html(`"${searchTerm}"`);
 
   $(generateNewspaperResults(libraryData));
 
-  $(".js-newspapers-sec").append(
-    `<p class="center-text"><a target="_blank" href="https://chroniclingamerica.loc.gov/">Search for more results from the Library of Congress' database</a></p>`
-  );
   console.log(`displayLibrary ran`);
 }
 
