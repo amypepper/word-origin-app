@@ -19,7 +19,7 @@ function wikiCall(url, options) {
 
 function displayWiki(wikiObj) {
   $(".js-wiki-sec").removeClass("hidden");
-  $(".js-wiki-ul").append(`
+  $(".js-wiki-sec").prepend(`
     <h2 class="center-text">Wikipedia page(s):</h2>`);
 
   testWiki(wikiObj);
@@ -28,14 +28,20 @@ function displayWiki(wikiObj) {
 }
 function testWiki(obj) {
   if (obj.type !== "standard") {
-    $(".js-wiki-ul")
-      .append(`<li><p class="wiki-title ital">${obj.displaytitle}</p>
-   <a class="wiki-title-link" target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a>
-    <p class="ital">(${obj.description})</p></li>`);
+    $(".js-wiki-ul").append(`<li>
+      <article>
+        <h3 class="wiki-title ital">${obj.displaytitle}</h3>
+        <p class="ital">(${obj.description})</p>
+      </article>
+      <a class="wiki-title-link" target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a>
+    </li>`);
   } else {
-    $(".js-wiki-ul")
-      .append(`<li><p class="wiki-title ital">${obj.displaytitle}</p>
-    <a class="wiki-title-link" target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a>
-     <article>${obj["extract"]}</article></li>`);
+    $(".js-wiki-ul").append(`<li>
+      <article>
+        <h3 class="wiki-title ital">${obj.displaytitle}</h3>
+        ${obj["extract"]}
+      </article>
+      <a class="wiki-title-link" target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a>
+    </li>`);
   }
 }

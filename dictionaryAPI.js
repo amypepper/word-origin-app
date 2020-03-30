@@ -20,10 +20,10 @@ function displayDictionaryDefs(dictionaryArr) {
   // remove hidden class so results will show
   $(".js-definitions-sec").removeClass("hidden");
 
-  //render results to the DOM
-  $(".js-definitions-ul").append(`
+  $(".js-definitions-sec").prepend(`
      <h2 class="center-text">Related Definitions:</h2>`);
 
+  //render results to the DOM
   generateDefinitions(dictionaryArr);
 
   $(".js-definitions-sec").append(
@@ -61,7 +61,7 @@ function displayEtymology(dictionaryArr) {
   // remove hidden class so results will show
   $(".js-origins-sec").removeClass("hidden");
 
-  $(".js-origins-ul").append(`
+  $(".js-origins-sec").prepend(`
     <h2 class="center-text">Related Word Origin(s):</h2>`);
 
   //render results to the DOM
@@ -99,6 +99,5 @@ function formatEtymologies(rawString) {
   let firstCleanup = rawString.replace(regex1, `"`);
   let cleanedUpEtymologies = firstCleanup.replace(regex2, `"`);
 
-  console.log("no more stupid {i}???", cleanedUpEtymologies);
   return cleanedUpEtymologies;
 }

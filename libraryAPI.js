@@ -19,10 +19,9 @@ function libraryCall(url) {
 
 function displayLibrary(libraryData) {
   $(".js-newspapers-sec").removeClass("hidden");
-
-  $(".js-newspapers-ul").append(`
-    <h2 class="center-text newspaper-title">"${searchTerm}" as used in newspapers throughout American history:</h2>
-    <p class="disclaimer ital center-text">(Search results' relevance limited by accuracy of text recognition software):</p>`);
+  $(".js-newspapers-sec")
+    .prepend(`<h2 class="center-text newspaper-title">"${searchTerm}" as used in newspapers throughout American history:</h2>
+  <p class="disclaimer ital center-text">(Search results' relevance limited by accuracy of text recognition software):</p>`);
 
   $(generateNewspaperResults(libraryData));
 
@@ -39,14 +38,13 @@ function generateNewspaperResults(libObj) {
     let rawTitle = newsArray[i].title;
     let rawDate = newsArray[i].date;
 
-    $(".js-newspapers-ul").append(`<li><p class="ital">${
-      rawTitle.split("[")[0]
-    }</p>
-      <p>Date published: ${normalizeDate(rawDate)}</p>
-     <a class="news-link" target="_blank" href="https://chroniclingamerica.loc.gov/${
-       newsArray[i].id
-     }/ocr/">View newspaper (opens in new tab)</a></li>
-      `);
+    $(".js-newspapers-ul").append(`<li>
+        <h3 class="ital">${rawTitle.split("[")[0]}</h3>
+        <p>Date published: ${normalizeDate(rawDate)}</p>
+        <a class="news-link" target="_blank" href="https://chroniclingamerica.loc.gov/${
+          newsArray[i].id
+        }/ocr/">View newspaper (opens in new tab)</a>
+      </li>`);
   }
 }
 function normalizeDate(dateString) {

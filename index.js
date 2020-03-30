@@ -5,57 +5,63 @@ let searchTerm;
 // listen for click on 'search' button
 function submitHandler() {
   $(".js-search").on("click", "button", event => {
-    // store the text that is in `input`
-    const userInput = $('input[id="word-search"]').val();
-
     // prevent default submit behavior
     event.preventDefault();
 
     // clear the search results
     $(".js-results-list").empty();
 
-    // strip out spaces and lowercase letters
-    searchTerm = prepText(userInput);
+    // store the text that is in `input`
+    const userInput = $('input[id="word-search"]').val();
+
+    // strip out spaces and lowercase letters from user input
+    searchTerm = prepSearchString(userInput);
     console.log(`this is searchTerm: ${searchTerm}`);
 
-    // test for non A-Z characters
-    if (searchTerm.length === 0) {
-      $(".form-validation-success").addClass("hidden");
-      $(".form-validation-fail").removeClass("hidden");
-
-      $(".form-validation-advice").text(
-        "We need a word before we can search for it!"
-      );
-    } else if (/(\W|[0-9])/g.test(searchTerm)) {
-      $(".form-validation-success").addClass("hidden");
-      $(".form-validation-fail").removeClass("hidden");
-
-      $(".form-validation-advice").text("Invalid search term. Try again!");
-    } else {
-      $(".form-validation-fail").addClass("hidden");
-      $(".form-validation-success").removeClass("hidden");
-
-      // call APIs with searchTerm
-      runSearches();
-    }
+    // run function to validate the search term
+    validateSearch(searchTerm);
   });
   console.log(`submitHandler ran`);
 }
+function validateSearch(testString) {
+  //test for no input
+  if (testString.length === 0) {
+    $(".form-validation-success").addClass("hidden");
+    $(".form-validation-fail").removeClass("hidden");
+
+    $(".form-validation-advice").text(
+      "We need a word before we can search for it!"
+    );
+  } else if (/(\W|[0-9])/g.test(testString)) {
+    // test for non A-Z characters
+    $(".form-validation-success").addClass("hidden");
+    $(".form-validation-fail").removeClass("hidden");
+
+    $(".form-validation-advice").text("Invalid search term. Try again!");
+  } else {
+    // if all is well, show the check symbol and run the searches
+    $(".form-validation-fail").addClass("hidden");
+    $(".form-validation-success").removeClass("hidden");
+
+    // call APIs with searchTerm
+    runSearches(testString);
+  }
+}
 
 // remove all characters except [a-z]
-function prepText(userWord) {
+function prepSearchString(userWord) {
   const regex2 = /\s|[\,\-]/g;
-  console.log(`prepText ran`);
+  console.log(`prepSearchString ran`);
   return userWord
     .toLowerCase()
     .trim()
     .replace(regex2, "");
 }
 
-function runSearches() {
-  const dictionaryApi = `https://dictionaryapi.com/api/v3/references/collegiate/json/${searchTerm}?key=59c5b8e3-5c70-4863-a9b2-9edad5a91de1`;
+function runSearches(searchString) {
+  const dictionaryApi = `https://dictionaryapi.com/api/v3/references/collegiate/json/${searchString}?key=59c5b8e3-5c70-4863-a9b2-9edad5a91de1`;
 
-  const wikiApi = `https://en.wikipedia.org/api/rest_v1/page/summary/${searchTerm}?redirect=false`;
+  const wikiApi = `https://en.wikipedia.org/api/rest_v1/page/summary/${searchString}?redirect=false`;
   const wikiHeaders = {
     headers: new Headers({
       "User-Agent": `amycarlsonpepper@gmail.com`,
@@ -64,7 +70,7 @@ function runSearches() {
     })
   };
 
-  const libraryApi = `https://chroniclingamerica.loc.gov/search/pages/results/?andtext=${searchTerm}&format=json`;
+  const libraryApi = `https://chroniclingamerica.loc.gov/search/pages/results/?andtext=${searchString}&format=json`;
 
   //call dictionary API
   dictionaryCall(dictionaryApi);

@@ -1,7 +1,7 @@
 /* color palette (light to dark)
 
-#5CA1CC (light sky blue)
 #A7B7C2 (pastel/linen blue)
+#5CA1CC (light sky blue)
 #7B878F (light gray)
 #364853 (dark blue gray)
 #393F42 (slate gray) */
@@ -96,6 +96,9 @@ a:hover {
   background-color: #5ca1cc;
   font-style: italic;
 }
+a:visited {
+  color: rgb(70, 0, 128);
+}
 button:focus,
 button:hover,
 input[id="word-search"]:focus,
@@ -182,7 +185,8 @@ input[id="word-search"] {
 }
 span.form-validation-fail,
 span.form-validation-success {
-  width: 10%;
+  width: 40px;
+  flex-grow: 0;
 }
 span.form-validation-fail::after {
   content: "✖";
@@ -233,9 +237,7 @@ ul.definitions {
   font-size: 1.75rem;
   text-shadow: 1px 1px 2px #393f42;
 }
-/* .wiki-title-link {
-  width: 50%;
-} */
+
 a.wiki-title-link:hover,
 a.wiki-title-link:focus {
   background-color: #7b878f;
@@ -275,15 +277,15 @@ background-color: #7b878f;
   h2 {
     font-size: 2rem;
   }
- 
+
   .ap-inner-flex-wrapper {
     padding: 0;
     margin: 0;
-    width: 45%;
+    width: 48%;
     
   }
   section.newspapers {
-    width: 45%;
+    width: 48%;
   }
   .ap-flex-wrapper {
     flex-flow: row wrap;
