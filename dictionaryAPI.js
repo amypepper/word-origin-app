@@ -79,14 +79,12 @@ function testEtymologies(dictInfo) {
               `<p>Supplemental notes: ${innerEtItem[1]}</p>`
             );
           });
-          // } else if (regex.test(etItem[1])) {
-          //   console.log("bad cross-reference:", etItem[1]);
         } else {
           $(".js-origins-ul").append(
             `<li>
-                <p><span class="ital">${
+                <p class="etymology"><span class="ital">${
                   dictInfo[i].hwi.hw
-                }:</span>${formatEtymologies(etItem[1])}</p>
+                }: </span>${formatEtymologies(etItem[1], dictInfo)}</p>
               </li>`
           );
         }
@@ -95,17 +93,40 @@ function testEtymologies(dictInfo) {
   }
 }
 
-function formatEtymologies(rawString) {
-  const regex1 = /{it}/g;
-  const regex2 = /{\/it}/g;
-  // const regex3 = /{et_link\|.+\|.+}/g;
-  // const crossRef = rawString.match(/{et_link\|.+\|.+}/g)
-  // const targetId = crossRef.forEach(matchItem => {
-  //   matchItem.split('|').flat()
-  // })
-  // let firstCleanup = rawString.replace(regex3, `<a href=""></a>`;
-  let firstCleanup = rawString.replace(regex1, `"`);
-  let cleanedUpEtymologies = firstCleanup.replace(regex2, `"`);
-
-  return cleanedUpEtymologies;
+function formatEtymologies(rawString, arr) {
+  const regex = /{et_link\|(.*?)\|.*?}/g;
+  if (regex.test(rawString)) {
+    let crossRefHw = arr.find(
+      item => item.meta.id === `${rawString.match(regex)[0].split("|")[1]}`
+    );
+    return rawString
+      .replace(regex, `${crossRefHw.hwi.hw}`)
+      .replace(/{\/?it}/g, `"`)
+      .replace(/{\/?dx_ety}/g, ``)
+      .replace(
+        /{dxt\|(.*?):\.*?(.*?)\|.*?}/g,
+        `"$1", entry 2 at <a target="_blank" href="https://www.merriam-webster.com/">merriam-webster.com</a>`
+      )
+      .replace(/{ma}.*?{\/ma}/g, ``)
+      .replace(/{b}.*?{\/b}/g, "")
+      .replace(/{bc}/g, `: `)
+      .replace(/{[lr]dquo}/g, `"`)
+      .replace(/{sc}.*?{\/sc}/g, "")
+      .replace(/{sup}(.*?){\/sup}/g, `<sup>$1</sup>`)
+      .replace(/{inf}(.*?){\/inf}/g, `<sub>$1</sub>`);
+  }
+  return rawString
+    .replace(/{\/?it}/g, `"`)
+    .replace(/{\/?dx_ety}/g, ``)
+    .replace(
+      /{dxt\|(.*?):\.*?(.*?)\|.*?}/g,
+      `"$1", entry 2 at <a target="_blank" href="https://www.merriam-webster.com/">merriam-webster.com</a>`
+    )
+    .replace(/{ma}.*?{\/ma}/g, ``)
+    .replace(/{b}.*?{\/b}/g, "")
+    .replace(/{bc}/g, `: `)
+    .replace(/{[lr]dquo}/g, `"`)
+    .replace(/{sc}.*?{\/sc}/g, "")
+    .replace(/{sup}(.*?){\/sup}/g, `<sup>$1</sup>`)
+    .replace(/{inf}(.*?){\/inf}/g, `<sub>$1</sub>`);
 }
