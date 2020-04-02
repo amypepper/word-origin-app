@@ -8,7 +8,7 @@ Live App:
 
 Landing page
 
-![Screenshot of landing page of the app](Landing-page-screenshot.png)
+![Screenshot of landing page of the app](Images/Landing-page-screenshot.png)
 
 Visual and text search validation
 
