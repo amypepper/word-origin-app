@@ -8,25 +8,25 @@ Live App:
 
 Landing page
 
-![Screenshot of landing page of the app][]
+![Screenshot of landing page of the app](Landing-page-screenshot.png)
 
 Visual and text search validation
 
-![Screenshot of valid search][]
+![Screenshot of valid search](Valid-search-results-screenshot.png)
 
-![Screenshot of invalid search][]
+![Screenshot of invalid search](Invalid-search-results-screenshot.png)
 
 Definitions results for the searched word
 
-![Screenshot of the searched word's definitions][]
+![Screenshot of the searched word's definitions](Definitions-results-screenshot.png)
 
 Etymological results for the searched word
 
-![Screenshot of the searched word's etymology][]
+![Screenshot of the searched word's etymology](Origin-results-screenshot.png)
 
 Wikipedia article about the searched word
 
-![Screenshot of the Wikipedia search results][]
+![Screenshot of the Wikipedia search results](Wiki-results-screenshot.png)
 
 ## Summary
 
