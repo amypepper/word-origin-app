@@ -68,6 +68,9 @@ a {
   margin: 0;
   width: auto;
 }
+.origins span {
+  padding: 0;
+}
 
 li > p {
   margin: 0;
@@ -77,7 +80,7 @@ h2,
   font-size: 1.5rem;
   font-family: "Cutive Mono", monospace;
   color: black;
-
+  width: fit-content;
   margin-block-end: 5px;
   margin-block-start: 5px;
 }
@@ -104,6 +107,7 @@ input[id="word-search"]:focus,
 input[id="word-search"]:hover {
   background-color: #5ca1cc;
 }
+
 ul {
   justify-content: flex-start;
   padding: 5px;
@@ -156,7 +160,7 @@ input[id="word-search"] {
   font-size: 1.25rem;
   letter-spacing: 0rem;
   margin: 0;
-  color: #393f42;
+  color: black;
 }
 .ap-submit-button {
   width: 150px;
@@ -254,7 +258,6 @@ a.wiki-title-link:focus {
 a.news-link {
   width: fit-content;
   align-self: flex-start;
-  padding-left: 5px;
 }
 .disclaimer {
   color: black;
@@ -262,6 +265,15 @@ a.news-link {
 li:nth-child(2n) a:hover,
 li:nth-child(2n) a:focus {
   background-color: #7b878f;
+}
+.etymology,
+.etymology *,
+sub {
+  display: inline;
+}
+sub {
+  font-size: 0.7rem;
+  padding: 0;
 }
 
 /**************** HELPER CLASSES ****************/
@@ -278,15 +290,6 @@ li:nth-child(2n) a:focus {
 }
 .center-text {
   text-align: center;
-}
-.etymology,
-.etymology *,
-sub {
-  display: inline;
-}
-sub {
-  font-size: 0.7rem;
-  padding: 0;
 }
 
 /**************** MEDIA QUERIES ****************/
@@ -307,5 +310,49 @@ sub {
   .ap-flex-wrapper {
     flex-flow: row wrap;
     align-items: flex-start;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .search-instructions-div {
+    width: 70%;
+    text-align: center;
+  }
+  p.search-instructions {
+    width: fit-content;
+  }
+  li p.supp-notes {
+    padding-left: 60px;
+  }
+  .origins p,
+  .wiki p,
+  .definitions p {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+  section,
+  section * {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  a.news-link {
+    padding-left: 20px;
+  }
+  a.perma-link {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  section.definitions {
+    margin-left: 80px;
+    margin-right: 80px;
+    width: 60%;
+  }
+  p.etymology a {
+    padding: 2px;
+    width: unset;
+  }
+  .origins p {
+    line-height: 2.5rem;
   }
 }

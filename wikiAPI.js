@@ -1,5 +1,6 @@
 "use strict";
 
+// call the Wikimedia API
 function wikiCall(url, options) {
   fetch(url, options)
     .then(response => {
@@ -20,14 +21,15 @@ function wikiCall(url, options) {
     );
 }
 
+//render the Wikipedia article that has a title the same as the user's searchTerm input
 function displayWiki(wikiObj) {
   $(".js-wiki-sec").removeClass("hidden");
 
   testWiki(wikiObj);
-
-  console.log(`displayWiki ran`);
 }
+
 function testWiki(obj) {
+  // see if a disambiguation is returned (instead of an actual article)
   if (obj.type !== "standard") {
     $(".js-wiki-ul").append(`<li>
       <article>
@@ -37,6 +39,7 @@ function testWiki(obj) {
       <a class="wiki-title-link" target="_blank" href="${obj["content_urls"].desktop.page}">See full article</a>
     </li>`);
   } else {
+    // if an article is returned, display that
     $(".js-wiki-ul").append(`<li>
       <article>
         <h3 class="wiki-title ital">${obj.displaytitle}</h3>

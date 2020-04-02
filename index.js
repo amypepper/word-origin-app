@@ -2,26 +2,23 @@
 
 let searchTerm;
 
-// listen for click on 'search' button
 function submitHandler() {
   $(".js-search").on("click", "button", event => {
-    // prevent default submit behavior
     event.preventDefault();
 
-    // clear the search results
     $(".js-results-list").empty();
+    $(".search-error").empty();
+    $(".form-validation-advice").empty();
 
     // store the text that is in `input`
     const userInput = $('input[id="word-search"]').val();
 
     // strip out spaces and lowercase letters from user input
     searchTerm = prepSearchString(userInput);
-    console.log(`this is searchTerm: ${searchTerm}`);
 
     // run function to validate the search term
     validateSearch(searchTerm);
   });
-  console.log(`submitHandler ran`);
 }
 function validateSearch(testString) {
   //test for no input
@@ -34,6 +31,7 @@ function validateSearch(testString) {
     );
   } else if (/(\W|[0-9])/g.test(testString)) {
     // test for non A-Z characters
+    // if there are, display the red x and an error message
     $(".form-validation-success").addClass("hidden");
     $(".form-validation-fail").removeClass("hidden");
 
@@ -48,7 +46,7 @@ function validateSearch(testString) {
   }
 }
 
-// remove all characters except [a-z]
+// remove spaces/hyphens and lower case letters so the URIs will work with users' keyword
 function prepSearchString(userWord) {
   const regex2 = /\s|[\,\-]/g;
   console.log(`prepSearchString ran`);
@@ -72,7 +70,6 @@ function runSearches(searchString) {
 
   const libraryApi = `https://chroniclingamerica.loc.gov/search/pages/results/?andtext=${searchString}&format=json`;
 
-  // make sure page is clear
   $(".js-results-list").empty();
 
   //call dictionary API
@@ -81,12 +78,8 @@ function runSearches(searchString) {
   //call Wikimedia API
   wikiCall(wikiApi, wikiHeaders);
 
-  //call lib of Congress API
+  //call Library of Congress Chronicling America API
   libraryCall(libraryApi);
-
-  console.log(
-    `runSearches ran with: ${dictionaryApi}, ${wikiApi}, ${libraryApi}`
-  );
 }
 
 $(submitHandler);

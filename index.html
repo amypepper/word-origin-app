@@ -21,7 +21,7 @@
   <body>
     <header>
       <h1 class="center-text">Where'd that word come from?</h1>
-      <form class="js-search ap-search-form">
+      <form role="search" class="js-search ap-search-form">
         <div class="search-instructions-div">
           <label for="word-search"
             >Type in an English word and hit search to find out about its
@@ -29,10 +29,10 @@
             past</label
           >
           <p class="search-instructions ital center-text">
-            (Please enter only letters)
+            (Please enter only letters A-Z)
           </p>
-          <span class="form-validation-advice"></span>
-          <span class="search-error"></span>
+          <span role="alert" class="form-validation-advice"></span>
+          <span role="alert" class="search-error"></span>
         </div>
         <div class="ap-search-input-div">
           <input
@@ -42,11 +42,17 @@
             spellcheck="true"
             autocomplete="on"
           />
-          <span class="form-validation-success center-text hidden"></span>
-          <span class="form-validation-fail center-text hidden"></span>
+          <span
+            role="alert"
+            class="form-validation-success center-text hidden"
+          ></span>
+          <span
+            role="alert"
+            class="form-validation-fail center-text hidden"
+          ></span>
         </div>
 
-        <div class="ap-submit-button-div">
+        <div role="button" class="ap-submit-button-div">
           <button class="ap-submit-button" type="submit">Search</button>
         </div>
       </form>
@@ -62,8 +68,8 @@
           >Click here to visit Merriam-Webster's online dictionary</a
         >
       </section>
-      <div class="ap-flex-wrapper">
-        <div class="ap-inner-flex-wrapper">
+      <div role="region" class="ap-flex-wrapper">
+        <div role="region" class="ap-inner-flex-wrapper">
           <section class="js-origins-sec origins hidden">
             <h2 class="center-text">Related Word Origin(s):</h2>
             <ul class="js-results-list js-origins-ul origins"></ul>
@@ -84,7 +90,7 @@
             <span class="search-term-holder"></span>as used in newspapers
             throughout American history:
           </h2>
-          <p class="disclaimer ital center-text">
+          <p role="heading" class="disclaimer ital center-text">
             (Search results' relevance limited by accuracy of text recognition
             software):
           </p>
