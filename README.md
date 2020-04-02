@@ -12,21 +12,21 @@ Landing page
 
 Visual and text search validation
 
-![Screenshot of valid search](Valid-search-results-screenshot.png)
+![Screenshot of valid search](Images/Valid-search-results-screenshot.png)
 
-![Screenshot of invalid search](Invalid-search-results-screenshot.png)
+![Screenshot of invalid search](Images/Invalid-search-results-screenshot.png)
 
 Definitions results for the searched word
 
-![Screenshot of the searched word's definitions](Definitions-results-screenshot.png)
+![Screenshot of the searched word's definitions](Images/Definitions-results-screenshot.png)
 
 Etymological results for the searched word
 
-![Screenshot of the searched word's etymology](Origin-results-screenshot.png)
+![Screenshot of the searched word's etymology](Images/Origin-results-screenshot.png)
 
 Wikipedia article about the searched word
 
-![Screenshot of the Wikipedia search results](Wiki-results-screenshot.png)
+![Screenshot of the Wikipedia search results](Images/Wiki-results-screenshot.png)
 
 ## Summary
 
