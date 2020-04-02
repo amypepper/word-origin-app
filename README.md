@@ -1,6 +1,6 @@
 ## Where'd that Word Come From?
 
-Live App:
+Live App
 
 <https://amypepper.github.io/word-origin-app/>
 
@@ -33,7 +33,7 @@ Wikipedia article about the searched word
 This app allows you to search for any word in English that you would like to learn about the origins of. It will return and display
 definitions and etymologies Merriam-Webster's Dictionary. It will also show results from Wikipedia (if there is a wikipedia article with that entry), either a disambiguation or a page summary. Finally, it will display 10 newspapers that contain the searched word that have been archived in the Library of Congress and are available online. The app gives you links to follow to view further information whenever relevant.
 
-## Technologies Used:
+## Technologies Used
 
 - jQuery
 - Javascript
