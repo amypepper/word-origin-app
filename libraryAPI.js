@@ -10,7 +10,6 @@ function libraryCall(url) {
       throw new Error(response.statusText);
     })
     .then(libraryJson => {
-      console.log("this is libraryJson: ", libraryJson);
       displayNewspapers(libraryJson);
     })
     .catch(err => $(".search-error").text(`${err}`));

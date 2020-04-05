@@ -11,7 +11,6 @@ function wikiCall(url, options) {
     })
 
     .then(wikiJson => {
-      console.log("this is wikipedia json: ", wikiJson);
       displayWiki(wikiJson);
     })
     .catch(err =>

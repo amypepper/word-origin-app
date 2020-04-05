@@ -49,7 +49,6 @@ function validateSearch(testString) {
 // remove spaces/hyphens and lower case letters so the URIs will work with users' keyword
 function prepSearchString(userWord) {
   const regex2 = /\s|[\,\-]/g;
-  console.log(`prepSearchString ran`);
   return userWord
     .toLowerCase()
     .trim()
