@@ -17,8 +17,6 @@ function dictionaryCall(url) {
 }
 
 function displayDictionaryDefs(dictionaryArr) {
-  console.log("this is dictionaryArr: ", dictionaryArr);
-
   // remove hidden class so results will show
   $(".js-definitions-sec").removeClass("hidden");
 
@@ -41,10 +39,7 @@ function generateDefinitions(dictEntriesArr) {
     dictEntriesArr.forEach(dictObj => {
       let headWord = `${dictObj.hwi.hw}`;
       // check whether shortdef is empty first
-      if (dictObj.shortdef.length === 0) {
-        // if it is empty, stop it from throwing an error
-        console.log("empty array- no definition text");
-      } else {
+      if (dictObj.shortdef.length) {
         // display all forms of the search word that are defined by the API and their definitions
         let senses = dictObj.shortdef;
         $(".js-definitions-ul").append(
